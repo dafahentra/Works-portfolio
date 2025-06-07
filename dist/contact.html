@@ -94,19 +94,19 @@
 
             <div class="position-relative ps-xl-7">
                 <div class="tracking-wide text-vertical mt-4 small d-none d-xl-block"><a class="text-vertical-link me-3"
-                        href="#">LinkedIn</a>
-                    &middot; <a class="text-vertical-link mx-3" href="#">Instagram</a> &middot; <a
-                        class="text-vertical-link ms-3" href="#">Github</a></div>
+                        href="https:/linkedin.com/in/dafahentra">LinkedIn</a>
+                    &middot; <a class="text-vertical-link mx-3" href="https:/instagram.com/dafahentra">Instagram</a> &middot; <a
+                        class="text-vertical-link ms-3" href="https:/github.com/dafahentra">Github</a></div>
 
                 <h1 class="display-3 col-xxl-8 mb-8">Let's keep in touch for further collaboration!</h1>
 
                 <h4 class="subtitle-sm mb-3">Email me</h4>
-                <a class="link-body" href="#">dapahentra@gmail.com</a>
+                <a class="link-body" href="mailto:dapahentra@gmail.com">dapahentra@gmail.com</a>
 
                 <h4 class="subtitle-sm mt-8 mb-4">Send Me A Message</h4>
 
                 <!-- Contact Form-->
-                <form>
+                <form id="contactForm">
                     <div class="row g-5">
 
                         <div class="col-12 col-xl-7">
@@ -114,14 +114,14 @@
                                 <!-- Name-->
                                 <div class="col-12 col-md-6">
                                     <label class="form-label">Your Name</label>
-                                    <input type="text" class="form-control" name="name" placeholder="John Doe">
+                                    <input type="text" class="form-control" name="name" placeholder="John Doe" required>
                                 </div>
                                 <!-- / Name-->
 
                                 <!-- Email-->
                                 <div class="col-12 col-md-6">
                                     <label class="form-label">Your Email Adress</label>
-                                    <input type="email" class="form-control" name="email" placeholder="john@doe.com">
+                                    <input type="email" class="form-control" name="email" placeholder="john@doe.com" required>
                                 </div>
                                 <!-- / Email-->
 
@@ -158,9 +158,9 @@
         <div class="container d-flex justify-content-between">
             <p class="small">All rights reserved. © Dafa Hentra 2025</p>
             <ul class="list-unstyled d-flex align-items-center">
-                <li class="ms-3"><a class="text-decoration-none text-muted" href="#"><i class="ri-linkedin-fill"></i></a></li>
-                <li class="ms-3"><a class="text-decoration-none text-muted" href="#"><i class="ri-instagram-fill"></i></a></li>
-                <li class="ms-3"><a class="text-decoration-none text-muted" href="#"><i class="ri-github-fill"></i></a></li>
+                <li class="ms-3"><a class="text-decoration-none text-muted" href="https:/linkedin.com/in/dafahentra"><i class="ri-linkedin-fill"></i></a></li>
+                <li class="ms-3"><a class="text-decoration-none text-muted" href="https:/instagram.com/dafahentra"><i class="ri-instagram-fill"></i></a></li>
+                <li class="ms-3"><a class="text-decoration-none text-muted" href="https:/github.com/dafahentra"><i class="ri-github-fill"></i></a></li>
             </ul>
         </div>
         </footer>
@@ -175,6 +175,37 @@
     
     <!-- Theme JS -->
     <script src="./assets/js/theme.bundle.js"></script>
+    <script>
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const formData = {
+    name: this.name.value,
+    email: this.email.value,
+    about: this.about.value
+  };
+
+  try {
+    const res = await fetch('http://localhost:3000/send-telegram', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      alert('Message sent successfully!');
+      this.reset();
+    } else {
+      alert('Failed to send message: ' + data.message);
+    }
+  } catch (err) {
+    alert('Error sending message: ' + err.message);
+  }
+});
+</script>
+
 </body>
 
 </html>
