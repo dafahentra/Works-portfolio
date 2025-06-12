@@ -184,38 +184,6 @@
     
     <!-- Theme JS -->
     <script src="./assets/js/theme.bundle.js"></script>
-  <script>
-document.getElementById('contactForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
-
-  const formData = {
-    name: this.name.value,
-    email: this.email.value,
-    about: this.about.value
-  };
-
-  try {
-    const res = await fetch('/.netlify/functions/sendtelegram', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formData)
-    });
-
-
-    const data = await res.json();
-
-    if (data.success) {
-      alert('Message sent successfully!');
-      this.reset();
-    } else {
-      alert('Failed to send message: ' + data.message);
-    }
-  } catch (err) {
-    alert('Error sending message: ' + err.message);
-  }
-});
-</script>
-
 </body>
 
 </html>
